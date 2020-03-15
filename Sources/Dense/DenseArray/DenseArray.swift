@@ -111,13 +111,12 @@ extension DenseArray {
              print("\(val, radix: .binary, toWidth: MemoryLayout<T>.size * 8)")
          }
          */
-/*
+
         if #available(OSX 10.12, *) {
             os_log("source : %zd", log: .default, type: .info, count * MemoryLayout<T>.size)
 
             os_log("alloc: %zd", log: .default, type: .info, capacity * MemoryLayout<T>.size)
         }
- */
     }
 }
 
