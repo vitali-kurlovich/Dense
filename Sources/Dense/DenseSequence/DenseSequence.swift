@@ -31,7 +31,7 @@ struct DenseSequence<T: SignedInteger>: Sequence {
 
     public
     var capacity: Int {
-        buffer.count + 1
+        buffer.capacity + 1
     }
 }
 
