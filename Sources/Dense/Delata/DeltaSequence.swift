@@ -8,7 +8,7 @@
 import Foundation
 
 public
-struct DeltaSequence<S: Sequence>: Sequence where S.Element: SignedInteger {
+struct DeltaSequence<S: Sequence>: Sequence where S.Element: SignedNumeric {
     public typealias Element = S.Element
 
     public typealias Iterator = DeltaSequenceIterator<S>

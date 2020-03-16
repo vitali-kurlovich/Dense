@@ -8,7 +8,7 @@
 import Foundation
 
 public
-struct DeltaSequenceIterator<S: Sequence>: IteratorProtocol where S.Element: SignedInteger {
+struct DeltaSequenceIterator<S: Sequence>: IteratorProtocol where S.Element: SignedNumeric {
     public typealias Element = S.Element
 
     private(set) var first: Element?

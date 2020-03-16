@@ -16,10 +16,6 @@ struct DenseSequence<T: SignedInteger>: Sequence {
 
     public typealias Iterator = DenseSequenceIterator<T>
 
-    public func makeIterator() -> Iterator {
-        Iterator(bufferIterator: buffer.makeIterator(), initial: initial)
-    }
-
     public
     init<S: Sequence>(_ sequance: S) where S.Element ==
         Element {
@@ -27,6 +23,14 @@ struct DenseSequence<T: SignedInteger>: Sequence {
 
         initial = deltaSequence.first
         buffer = DenseArray<Element>(deltaSequence)
+    }
+
+    public func makeIterator() -> Iterator {
+        Iterator(bufferIterator: buffer.makeIterator(), initial: initial)
+    }
+
+    public var underestimatedCount: Int {
+        buffer.count + 1
     }
 
     public
