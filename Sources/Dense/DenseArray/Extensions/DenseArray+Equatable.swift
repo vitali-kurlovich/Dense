@@ -38,3 +38,12 @@ extension DenseArray {
         return true
     }
 }
+
+extension DenseArray: Equatable {
+    public static func == (lhs: DenseArray<T>, rhs: DenseArray<T>) -> Bool {
+        lhs.multiplier == rhs.multiplier &&
+            lhs._min == rhs._min &&
+            lhs._max == rhs._max &&
+            lhs.buffer == rhs.buffer
+    }
+}

@@ -8,25 +8,9 @@
 
 import Foundation
 
-extension MemoryBuffer: Equatable {
-    static func == (lhs: MemoryBuffer<T>, rhs: MemoryBuffer<T>) -> Bool {
-        guard lhs.count == rhs.count else {
-            return false
-        }
-
-        for index in 0 ..< lhs.count {
-            guard lhs[index] == rhs[index] else {
-                return false
-            }
-        }
-
-        return true
-    }
-}
-
 internal
-final class MemoryBuffer<T: BinaryInteger> {
-    private let buffer: UnsafeMutableBufferPointer<T>
+final class MemoryBuffer<T: BinaryInteger & Codable> {
+    internal let buffer: UnsafeMutableBufferPointer<T>
 
     init(_ capacity: Int) {
         buffer = UnsafeMutableBufferPointer<T>.allocate(capacity: capacity)

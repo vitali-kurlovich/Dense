@@ -8,7 +8,7 @@
 import Foundation
 
 public
-struct DenseSequence<T: SignedInteger>: Sequence {
+struct DenseSequence<T: SignedInteger & Codable>: Sequence {
     public typealias Element = T
 
     private let initial: T?
@@ -40,7 +40,7 @@ struct DenseSequence<T: SignedInteger>: Sequence {
 }
 
 public
-struct DenseSequenceIterator<T: SignedInteger>: IteratorProtocol {
+struct DenseSequenceIterator<T: SignedInteger & Codable>: IteratorProtocol {
     public typealias Element = T
 
     private var bufferIterator: DenseArray<T>.Iterator

@@ -13,23 +13,15 @@ import Foundation
 #endif
 
 public
-struct DenseArray<T: BinaryInteger> {
-    private let buffer: MemoryBuffer<T>
+struct DenseArray<T: BinaryInteger & Codable> {
     public let endIndex: Int
+
     private let bitSize: Int
 
-    private let _min: T?
-    private let _max: T?
-    private let multiplier: T
-}
-
-extension DenseArray: Equatable {
-    public static func == (lhs: DenseArray<T>, rhs: DenseArray<T>) -> Bool {
-        lhs.multiplier == rhs.multiplier &&
-            lhs._min == rhs._min &&
-            lhs._max == rhs._max &&
-            lhs.buffer == rhs.buffer
-    }
+    internal let _min: T?
+    internal let _max: T?
+    internal let multiplier: T
+    internal let buffer: MemoryBuffer<T>
 }
 
 extension DenseArray: RandomAccessCollection {
@@ -63,6 +55,50 @@ extension DenseArray {
 
 public
 extension DenseArray {
+    init<S: Sequence>(_ sequance: S, min: T?, max: T?, multiplier: T, count: Int) where S.Element ==
+        Element {
+        _min = min
+        _max = max
+
+        guard let min = min, let max = max, min != max else {
+            bitSize = 0
+            buffer = MemoryBuffer<T>(0)
+            endIndex = count
+            self.multiplier = 1
+            return
+        }
+
+        endIndex = count
+        self.multiplier = multiplier
+
+        bitSize = requaredBits(for: max - min)
+
+        let bitCount = Int(bitSize) * count
+        let typeBitSize = MemoryLayout<T>.size * 8
+
+        if bitSize == MemoryLayout<T>.size * 8 {
+            buffer = MemoryBuffer<T>(count)
+            fillWithoutDense(sequance)
+        } else {
+            let lenght = bitCount / typeBitSize
+
+            let bits = lenght * typeBitSize
+
+            let capacity = lenght + (bitCount > bits ? 1 : 0)
+
+            buffer = MemoryBuffer<T>(capacity)
+            buffer[capacity - 1] = 0
+
+            fill(sequance)
+        }
+
+        if #available(OSX 10.12, *) {
+            os_log("source : %zd", log: .default, type: .info, count * MemoryLayout<T>.size)
+
+            os_log("alloc: %zd", log: .default, type: .info, capacity * MemoryLayout<T>.size)
+        }
+    }
+
     init<S: Sequence>(_ sequance: S) where S.Element ==
         Element {
         let info = sequance.sequenceInfo()
@@ -111,12 +147,6 @@ extension DenseArray {
              print("\(val, radix: .binary, toWidth: MemoryLayout<T>.size * 8)")
          }
          */
-
-        if #available(OSX 10.12, *) {
-            os_log("source : %zd", log: .default, type: .info, count * MemoryLayout<T>.size)
-
-            os_log("alloc: %zd", log: .default, type: .info, capacity * MemoryLayout<T>.size)
-        }
     }
 }
 
