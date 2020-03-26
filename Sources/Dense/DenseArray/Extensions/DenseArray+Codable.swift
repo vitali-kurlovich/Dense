@@ -9,7 +9,7 @@ import Foundation
 
 extension DenseArray: Encodable {
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
+        var container = encoder.unkeyedContainer()
 
         if let min = _min, let max = _max {
             try container.encode(multiplier)

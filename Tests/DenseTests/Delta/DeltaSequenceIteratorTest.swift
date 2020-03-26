@@ -12,16 +12,36 @@ final class DeltaSequenceIteratorTest: XCTestCase {
     func testIterator() {
         let source = [6, 7, 8, 2, -2, 0, -5, -5]
 
-        var iterator = DeltaSequenceIterator(source)
-        XCTAssertEqual(iterator.first, 6)
+        let delta = DeltaSequence(source).map { $0 }
 
-        var delta = [Int]()
-        delta.reserveCapacity(source.underestimatedCount)
+        XCTAssertEqual(delta, [6, 1, 1, -6, -4, 2, -5, 0])
 
-        while let last = iterator.next() {
-            delta.append(last)
-        }
+        let accumulated = AccumulateSequence(delta).map { $0 }
 
-        XCTAssertEqual(delta, [1, 1, -6, -4, 2, -5, 0])
+        XCTAssertEqual(source, accumulated)
+    }
+
+    func testIterator_1() {
+        let source = [6]
+
+        let delta = DeltaSequence(source).map { $0 }
+
+        XCTAssertEqual(delta, [6])
+
+        let accumulated = AccumulateSequence(delta).map { $0 }
+
+        XCTAssertEqual(source, accumulated)
+    }
+
+    func testIterator_2() {
+        let source: [Int] = []
+
+        let delta = DeltaSequence(source).map { $0 }
+
+        XCTAssertEqual(delta, [])
+
+        let accumulated = AccumulateSequence(delta).map { $0 }
+
+        XCTAssertEqual(source, accumulated)
     }
 }

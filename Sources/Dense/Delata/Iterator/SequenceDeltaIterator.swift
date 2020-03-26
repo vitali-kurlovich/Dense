@@ -8,12 +8,10 @@
 import Foundation
 
 public
-struct DeltaSequenceIterator<S: Sequence>: IteratorProtocol where S.Element: SignedNumeric {
+struct SequenceDeltaIterator<S: Sequence>: IteratorProtocol where S.Element: AdditiveArithmetic {
     public typealias Element = S.Element
 
-    private(set) var first: Element?
-    private var last: Element
-
+    private var last: Element?
     private var iterator: S.Iterator
 
     public
@@ -23,22 +21,19 @@ struct DeltaSequenceIterator<S: Sequence>: IteratorProtocol where S.Element: Sig
         }
 
         defer {
-            last = next
+            self.last = next
         }
 
-        return next - last
+        if let last = last {
+            return next - last
+        } else {
+            return next
+        }
     }
 
     public
     init(_ sequance: S) {
         iterator = sequance.makeIterator()
-
-        if let last = iterator.next() {
-            first = last
-            self.last = last
-        } else {
-            first = nil
-            last = 0
-        }
     }
 }
+

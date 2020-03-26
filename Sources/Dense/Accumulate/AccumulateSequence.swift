@@ -1,17 +1,17 @@
 //
-//  DeltaSequence.swift
+//  AccumulateSequence.swift
 //  Dense
 //
-//  Created by Vitali Kurlovich on 3/16/20.
+//  Created by Vitali Kurlovich on 3/26/20.
 //
 
 import Foundation
 
 public
-struct DeltaSequence<S: Sequence>: Sequence where S.Element: AdditiveArithmetic {
+struct AccumulateSequence<S: Sequence>: Sequence where S.Element: AdditiveArithmetic {
     public typealias Element = S.Element
 
-    public typealias Iterator = SequenceDeltaIterator<S>
+    public typealias Iterator = SequenceAccumulateIterator<S>
 
     private let sequence: S
 
@@ -28,5 +28,3 @@ struct DeltaSequence<S: Sequence>: Sequence where S.Element: AdditiveArithmetic 
         sequence.underestimatedCount
     }
 }
-
-
