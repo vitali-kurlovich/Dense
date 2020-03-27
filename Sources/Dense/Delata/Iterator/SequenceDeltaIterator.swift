@@ -36,4 +36,3 @@ struct SequenceDeltaIterator<S: Sequence>: IteratorProtocol where S.Element: Add
         iterator = sequance.makeIterator()
     }
 }
-

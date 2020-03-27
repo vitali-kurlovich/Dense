@@ -28,5 +28,3 @@ struct DeltaSequence<S: Sequence>: Sequence where S.Element: AdditiveArithmetic 
         sequence.underestimatedCount
     }
 }
-
-

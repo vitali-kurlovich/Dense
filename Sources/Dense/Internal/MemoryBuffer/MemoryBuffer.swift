@@ -9,18 +9,18 @@
 import Foundation
 
 internal
-final class MemoryBuffer<T: BinaryInteger & Codable> {
-    internal let buffer: UnsafeMutableBufferPointer<T>
+final class MemoryBuffer<Element: BinaryInteger & Codable> {
+    internal let buffer: UnsafeMutableBufferPointer<Element>
 
     init(_ capacity: Int) {
-        buffer = UnsafeMutableBufferPointer<T>.allocate(capacity: capacity)
+        buffer = UnsafeMutableBufferPointer<Element>.allocate(capacity: capacity)
     }
 
     deinit {
         buffer.deallocate()
     }
 
-    subscript(position: Int) -> T {
+    subscript(position: Int) -> Element {
         get {
             buffer[position]
         }

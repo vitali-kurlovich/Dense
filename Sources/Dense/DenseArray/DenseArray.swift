@@ -55,6 +55,26 @@ extension DenseArray {
 
 public
 extension DenseArray {
+    internal
+    init(_ buffer: MemoryBuffer<T>, min: T?, max: T?, multiplier: T, count: Int) {
+        _min = min
+        _max = max
+
+        self.buffer = buffer
+
+        guard let min = min, let max = max, min != max else {
+            bitSize = 0
+            endIndex = count
+            self.multiplier = 1
+            return
+        }
+
+        endIndex = count
+        self.multiplier = multiplier
+
+        bitSize = requaredBits(for: max - min)
+    }
+
     init<S: Sequence>(_ sequance: S, min: T?, max: T?, multiplier: T, count: Int) where S.Element ==
         Element {
         _min = min
@@ -65,6 +85,9 @@ extension DenseArray {
             buffer = MemoryBuffer<T>(0)
             endIndex = count
             self.multiplier = 1
+
+            // self.init(MemoryBuffer<T>(0), min: min,  max: max, multiplier:multiplier, count:count )
+
             return
         }
 
@@ -78,6 +101,7 @@ extension DenseArray {
 
         if bitSize == MemoryLayout<T>.size * 8 {
             buffer = MemoryBuffer<T>(count)
+            buffer[count - 1] = 0
             fillWithoutDense(sequance)
         } else {
             let lenght = bitCount / typeBitSize
@@ -351,7 +375,7 @@ extension DenseArray {
     }
 }
 
-private
+internal
 func requaredBits<T: BinaryInteger>(for value: T) -> Int {
     var v: UInt64 = 2
 

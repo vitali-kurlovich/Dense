@@ -14,3 +14,16 @@ extension MemoryBuffer: Encodable {
         try container.encode(contentsOf: buffer)
     }
 }
+
+extension MemoryBuffer: Decodable {
+    public convenience init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        let count = try container.decode(Int.self)
+
+        self.init(count)
+
+        for index in 0 ..< count {
+            self[index] = try container.decode(Element.self)
+        }
+    }
+}
