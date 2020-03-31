@@ -74,6 +74,13 @@ extension DenseArray {
 
         bitSize = requaredBits(for: max - min)
     }
+}
+
+public
+extension DenseArray {
+    init() {
+        self.init(MemoryBuffer(0), min: nil, max: nil, multiplier: 0, count: 0)
+    }
 
     init<S: Sequence>(_ sequance: S, min: T?, max: T?, multiplier: T, count: Int) where S.Element ==
         Element {

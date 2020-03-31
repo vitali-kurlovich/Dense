@@ -6,70 +6,75 @@
 //
 
 import Foundation
+// DenseSequence+Codable
+public
+struct DenseSequence<T: SignedInteger & Codable>: Sequence {
+    public typealias Element = T
+    public typealias Iterator = DenseSequenceIterator<T>
 
-/*
+    internal let initial: Element?
+    internal let buffer: DenseArray<Element>
 
- public
- struct DenseSequence<T: SignedInteger & Codable>: Sequence {
- public typealias Element = T
+    internal
+    init(initial: Element?, buffer: DenseArray<Element>) {
+        self.initial = initial
+        self.buffer = buffer
+    }
 
- private let initial: T?
- private let buffer: DenseArray<T>
+    public func makeIterator() -> Iterator {
+        DenseSequenceIterator(self)
+    }
 
- public typealias Iterator = DenseSequenceIterator<T>
+    public var underestimatedCount: Int {
+        buffer.count
+    }
 
- public
- init<S: Sequence>(_ sequance: S) where S.Element ==
-     Element {
-     let deltaSequence = DeltaSequence(sequance)
+    public var capacity: Int {
+        buffer.capacity
+    }
+}
 
-     initial = deltaSequence.first
-     buffer = DenseArray<Element>(deltaSequence)
- }
+extension DenseSequence {
+    public
+    init<S: Sequence>(_ sequence: S) where S.Element == T {
+        var iterator = sequence.makeIterator()
+        if let first = iterator.next() {
+            let dropFirst = DeltaSequence(sequence).dropFirst()
 
- public func makeIterator() -> Iterator {
-     Iterator(bufferIterator: buffer.makeIterator(), initial: initial)
- }
+            self.init(initial: first, buffer: DenseArray(dropFirst))
+        } else {
+            self.init(initial: nil, buffer: DenseArray())
+        }
+    }
 
- public var underestimatedCount: Int {
-     buffer.count + 1
- }
+    public init() {
+        self.init(initial: nil, buffer: DenseArray())
+    }
+}
 
- public
- var capacity: Int {
-     buffer.capacity + 1
- }
- }
+public
+struct DenseSequenceIterator<T: SignedInteger & Codable>: IteratorProtocol {
+    public typealias Element = T
 
- public
- struct DenseSequenceIterator<T: SignedInteger & Codable>: IteratorProtocol {
- public typealias Element = T
+    private var last: Element?
+    private var iterator: DenseArray<T>.Iterator
 
- private var bufferIterator: DenseArray<T>.Iterator
- private var last: T?
+    public
+    mutating func next() -> Element? {
+        defer {
+            if let last = last, let next = iterator.next() {
+                self.last = last + next
+            } else {
+                self.last = nil
+            }
+        }
 
- public mutating
- func next() -> T? {
-     guard let current = last else {
-         return nil
-     }
+        return last
+    }
 
-     defer {
-         if let next = bufferIterator.next() {
-             last = current + next
-         } else {
-             last = nil
-         }
-     }
-
-     return current
- }
-
- internal
- init(bufferIterator: DenseArray<T>.Iterator, initial: T?) {
-     self.bufferIterator = bufferIterator
-     last = initial
- }
- }
-
- */
+    public
+    init(_ sequence: DenseSequence<T>) {
+        iterator = sequence.buffer.makeIterator()
+        last = sequence.initial
+    }
+}
