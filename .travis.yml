@@ -6,6 +6,7 @@ env:
   global:
   - SWIFT_BRANCH=swift-5.2-release
   - SWIFT_VERSION=swift-5.2-RELEASE
+  - CODECOV_TOKEN="13ed7985-b6cd-4495-b33f-19f943e055c4"
   - PACKAGE_VERSION=0.0.1
 jobs:
   include:
@@ -35,4 +36,6 @@ jobs:
     - export PATH="/Library/Developer/Toolchains/$SWIFT_VERSION.xctoolchain/usr/bin:$PATH"
     script:
     - swift package update
-    - swift test
+    - swift test --enable-code-coverage
+ - after_success:
+    - bash <(curl -s https://codecov.io/bash)

@@ -374,6 +374,7 @@ extension DenseArray {
     }
 }
 
+
 internal
 func requaredBits<T: BinaryInteger>(for value: T) -> Int {
     var v: UInt64 = 2
@@ -386,3 +387,4 @@ func requaredBits<T: BinaryInteger>(for value: T) -> Int {
     }
     return (MemoryLayout<T>.size * 8)
 }
+

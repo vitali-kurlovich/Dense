@@ -12,12 +12,23 @@ final class DenseArrayTests: XCTestCase {
         let ucompact = DenseArray(uarray)
 
         XCTAssertTrue(uarray == ucompact)
+        XCTAssertTrue(ucompact == uarray)
 
         let array: [Int] = [5, 6, 7, 45, 2, 63, 13, 54, 66, 44, 33, 164, 321, 54, 123]
 
         let compact = DenseArray(array)
 
         XCTAssertTrue(array == compact)
+
+        let narray: [Int] = [5, 6, 7, 45, 2, 63, 13, 54, 67, 44, 33, 164, 321, 54, 123]
+
+        XCTAssertFalse(narray == compact)
+        XCTAssertFalse(compact == narray)
+        
+        let nnarray: [Int] = [5, 6, 7, 45, 2, 63, 13, 54, 66, 44, 33, 164, 321, 54, 123, 4]
+        
+        XCTAssertFalse(nnarray == compact)
+        XCTAssertFalse(compact == nnarray)
     }
 
     func testDenseArray_1() {

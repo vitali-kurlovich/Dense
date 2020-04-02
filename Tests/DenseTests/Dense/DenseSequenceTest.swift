@@ -14,6 +14,8 @@ class DenseSequenceTest: XCTestCase {
         let compact = DenseSequence(array)
 
         XCTAssertEqual(array, Array(compact))
+
+        XCTAssertEqual(DenseSequence<Int>(), DenseSequence())
     }
 
     func testDenseSequenceEquatable() {
@@ -39,12 +41,21 @@ class DenseSequenceTest: XCTestCase {
 
         let encoder = JSONEncoder()
 
-        let data = try! encoder.encode(compact)
+        var data = try! encoder.encode(compact)
 
         let decoder = JSONDecoder()
         let decoded = try! decoder.decode(DenseSequence<Int>.self, from: data)
 
         XCTAssertEqual(compact, decoded)
+
+        let empty: [Int] = []
+
+        let emptyCompact = DenseSequence(empty)
+
+        data = try! encoder.encode(emptyCompact)
+        let decodedEmpty = try! decoder.decode(DenseSequence<Int>.self, from: data)
+
+        XCTAssertEqual(emptyCompact, decodedEmpty)
     }
 
     func testDenseSequenceCapacity() {
