@@ -120,11 +120,6 @@ extension DenseArray {
 
             fill(sequance)
         }
-
-        if #available(iOS 12.0, macOS 10.15, *) {
-            os_log("source : %zd", log: .default, type: .info, count * MemoryLayout<T>.size)
-            os_log("alloc: %zd", log: .default, type: .info, capacity * MemoryLayout<T>.size)
-        }
     }
 
     init<S: Sequence>(_ sequance: S) where S.Element ==
