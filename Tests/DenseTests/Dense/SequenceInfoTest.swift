@@ -9,14 +9,6 @@
 import XCTest
 
 final class SequenceInfoTest: XCTestCase {
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testSequenceInfo() {
         let array = [3, 15, 7, 9]
 
@@ -32,4 +24,9 @@ final class SequenceInfoTest: XCTestCase {
 
         XCTAssertEqual(info, SequenceInfo(count: 4, min: 3, max: 16, gcd: 1))
     }
+
+    static var allTests = [
+        ("testSequenceInfo", testSequenceInfo),
+        ("testSequenceInfo_1", testSequenceInfo_1),
+    ]
 }

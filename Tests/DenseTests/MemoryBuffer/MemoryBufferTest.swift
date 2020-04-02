@@ -25,4 +25,8 @@ final class MemoryBufferTest: XCTestCase {
 
         XCTAssertEqual(buffer, decoded)
     }
+
+    static var allTests = [
+        ("testMemoryBufferCodable", testMemoryBufferCodable),
+    ]
 }

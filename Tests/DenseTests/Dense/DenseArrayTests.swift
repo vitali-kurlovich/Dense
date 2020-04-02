@@ -326,6 +326,12 @@ final class DenseArrayTests: XCTestCase {
         ("testDenseArray_3", testDenseArray_3),
         ("testDenseArray_4", testDenseArray_4),
         ("testDenseArray_5", testDenseArray_5),
-        ("testDenseArray_6", testDenseArray_6)
+        ("testDenseArray_6", testDenseArray_6),
+        ("testDenseArrayCoding_1", testDenseArrayCoding_1),
+        ("testDenseArrayCoding_2", testDenseArrayCoding_2),
+        ("testDenseArrayCoding_3", testDenseArrayCoding_3),
+        ("testDenseArrayCoding_4", testDenseArrayCoding_4),
+        ("testDenseArrayCoding_5", testDenseArrayCoding_5),
+        ("testDenseArrayCoding_6", testDenseArrayCoding_6),
     ]
 }

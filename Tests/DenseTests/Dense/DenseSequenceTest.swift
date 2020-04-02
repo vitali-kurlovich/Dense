@@ -59,4 +59,11 @@ class DenseSequenceTest: XCTestCase {
 
         print("\(bSize) vs \(cSize) vs\(dSize)")
     }
+
+    static var allTests = [
+        ("testDenseSequence", testDenseSequence),
+        ("testDenseSequenceEquatable", testDenseSequenceEquatable),
+        ("testDenseSequenceCodable", testDenseSequenceCodable),
+        ("testDenseSequenceCapacity", testDenseSequenceCapacity),
+    ]
 }

@@ -44,4 +44,10 @@ final class DeltaSequenceIteratorTest: XCTestCase {
 
         XCTAssertEqual(source, accumulated)
     }
+
+    static var allTests = [
+        ("testIterator", testIterator),
+        ("testIterator_1", testIterator_1),
+        ("testIterator_2", testIterator_2),
+    ]
 }
