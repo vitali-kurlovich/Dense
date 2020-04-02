@@ -82,6 +82,7 @@ extension DenseArray {
         self.init(MemoryBuffer(0), min: nil, max: nil, multiplier: 0, count: 0)
     }
 
+    internal
     init<S: Sequence>(_ sequance: S, min: T?, max: T?, multiplier: T, count: Int) where S.Element ==
         Element {
         _min = min

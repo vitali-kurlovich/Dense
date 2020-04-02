@@ -14,18 +14,23 @@ final class DenseArrayTests: XCTestCase {
         XCTAssertTrue(uarray == ucompact)
         XCTAssertTrue(ucompact == uarray)
 
-        let array: [Int] = [5, 6, 7, 45, 2, 63, 13, 54, 66, 44, 33, 164, 321, 54, 123]
+        XCTAssertEqual(ucompact.min(), uarray.min())
+        XCTAssertEqual(ucompact.max(), uarray.max())
+
+        let array: [Int] = [-5, 6, 7, 45, 2, 63, 13, 54, 66, 44, 33, 164, 321, 54, 123]
 
         let compact = DenseArray(array)
 
         XCTAssertTrue(array == compact)
+        XCTAssertEqual(compact.min(), array.min())
+        XCTAssertEqual(compact.max(), array.max())
 
-        let narray: [Int] = [5, 6, 7, 45, 2, 63, 13, 54, 67, 44, 33, 164, 321, 54, 123]
+        let narray: [Int] = [-5, 6, 7, 45, 2, 63, 13, 54, 67, 44, 33, 164, 321, 54, 123]
 
         XCTAssertFalse(narray == compact)
         XCTAssertFalse(compact == narray)
 
-        let nnarray: [Int] = [5, 6, 7, 45, 2, 63, 13, 54, 66, 44, 33, 164, 321, 54, 123, 4]
+        let nnarray: [Int] = [-5, 6, 7, 45, 2, 63, 13, 54, 66, 44, 33, 164, 321, 54, 123, 4]
 
         XCTAssertFalse(nnarray == compact)
         XCTAssertFalse(compact == nnarray)
