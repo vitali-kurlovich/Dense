@@ -93,8 +93,6 @@ extension DenseArray {
             endIndex = count
             self.multiplier = 1
 
-            // self.init(MemoryBuffer<T>(0), min: min,  max: max, multiplier:multiplier, count:count )
-
             return
         }
 
@@ -123,9 +121,8 @@ extension DenseArray {
             fill(sequance)
         }
 
-        if #available(OSX 10.12, *) {
+        if #available(iOS 12.0, macOS 10.15, *) {
             os_log("source : %zd", log: .default, type: .info, count * MemoryLayout<T>.size)
-
             os_log("alloc: %zd", log: .default, type: .info, capacity * MemoryLayout<T>.size)
         }
     }
