@@ -3,5 +3,5 @@ import XCTest
 import DenseTests
 
 var tests = [XCTestCaseEntry]()
-tests += DenseArrayTests.allTests()
+tests += allTests()
 XCTMain(tests)

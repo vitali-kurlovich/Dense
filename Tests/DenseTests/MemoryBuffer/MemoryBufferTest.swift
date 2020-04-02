@@ -8,7 +8,7 @@
 @testable import Dense
 import XCTest
 
-class MemoryBufferTest: XCTestCase {
+final class MemoryBufferTest: XCTestCase {
     func testMemoryBufferCodable() {
         let buffer = MemoryBuffer<Int>(5)
         buffer[0] = 5

@@ -326,6 +326,6 @@ final class DenseArrayTests: XCTestCase {
         ("testDenseArray_3", testDenseArray_3),
         ("testDenseArray_4", testDenseArray_4),
         ("testDenseArray_5", testDenseArray_5),
-        ("testDenseArray_6", testDenseArray_6),
+        ("testDenseArray_6", testDenseArray_6)
     ]
 }
