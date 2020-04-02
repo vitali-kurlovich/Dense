@@ -24,9 +24,9 @@ final class DenseArrayTests: XCTestCase {
 
         XCTAssertFalse(narray == compact)
         XCTAssertFalse(compact == narray)
-        
+
         let nnarray: [Int] = [5, 6, 7, 45, 2, 63, 13, 54, 66, 44, 33, 164, 321, 54, 123, 4]
-        
+
         XCTAssertFalse(nnarray == compact)
         XCTAssertFalse(compact == nnarray)
     }
