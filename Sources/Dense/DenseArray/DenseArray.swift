@@ -127,50 +127,7 @@ extension DenseArray {
         Element {
         let info = sequance.sequenceInfo()
 
-        _min = info.min
-        _max = info.max
-
-        let count = info.count
-
-        guard let min = info.min, let max = info.max, min != max else {
-            bitSize = 0
-            buffer = MemoryBuffer<T>(0)
-            endIndex = count
-            multiplier = 1
-            return
-        }
-
-        endIndex = count
-        multiplier = info.gcd
-
-        bitSize = requaredBits(for: max - min)
-
-        let bitCount = Int(bitSize) * count
-        let typeBitSize = MemoryLayout<T>.size * 8
-
-        if bitSize == MemoryLayout<T>.size * 8 {
-            buffer = MemoryBuffer<T>(count)
-            fillWithoutDense(sequance)
-        } else {
-            let lenght = bitCount / typeBitSize
-
-            let bits = lenght * typeBitSize
-
-            let capacity = lenght + (bitCount > bits ? 1 : 0)
-
-            buffer = MemoryBuffer<T>(capacity)
-            buffer[capacity - 1] = 0
-
-            fill(sequance)
-        }
-
-        /*
-         for idx in 0 ..< buffer.count {
-             let val = buffer[idx]
-
-             print("\(val, radix: .binary, toWidth: MemoryLayout<T>.size * 8)")
-         }
-         */
+        self.init(sequance, min: info.min, max: info.max, multiplier: info.gcd, count: info.count)
     }
 }
 
@@ -377,13 +334,16 @@ extension DenseArray {
 
 internal
 func requaredBits<T: BinaryInteger>(for value: T) -> Int {
-    var v: UInt64 = 2
+    assert(value >= 0)
 
-    for bits in 1 ... (MemoryLayout<T>.size * 8) {
-        if value < v {
-            return bits
-        }
-        v *= 2
+    let value = UInt64(value)
+    var mask: UInt64 = 0
+    var bits = 0
+
+    while (mask & value) != value {
+        mask = (mask << 1) | 1
+        bits += 1
     }
-    return (MemoryLayout<T>.size * 8)
+
+    return bits
 }
