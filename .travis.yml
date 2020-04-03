@@ -35,7 +35,6 @@ jobs:
     - sudo installer -pkg $SWIFT_VERSION-osx.pkg -target /
     - export PATH="/Library/Developer/Toolchains/$SWIFT_VERSION.xctoolchain/usr/bin:$PATH"
     script:
-    - swift package generate-xcodeproj
-    - xcodebuild test -enableCodeCoverage=YES
+    - xcodebuild -scheme Dense test -enableCodeCoverage=YES -parallel-testing-enabled=YES
     after_success:
     - bash <(curl -s https://codecov.io/bash) -X xcodellvm
