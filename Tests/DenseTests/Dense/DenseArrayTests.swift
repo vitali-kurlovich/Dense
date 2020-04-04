@@ -1,12 +1,23 @@
 @testable import Dense
 import XCTest
+import Foundation
 
 #if canImport(os)
     import os.log
 #endif
 
+let session = URLSession(configuration: .default)
+
 final class DenseArrayTests: XCTestCase {
     func testDenseArray() {
+        
+        
+        let url = URL(string: "https://www.dukascopy.com/datafeed/EURUSD/2019/03/04/11h_ticks.bi5")!
+        
+        let task = session.dataTask(with: url)
+        
+        task.resume()
+        
         let uarray: [UInt] = [5, 6, 7, 45, 2, 63, 13, 54, 66, 44, 33, 164, 321, 54, 123]
 
         let ucompact = DenseArray(uarray)
