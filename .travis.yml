@@ -10,6 +10,14 @@ env:
   - PACKAGE_VERSION=0.0.1
 jobs:
   include:
+  - stage: OSX test
+    os: osx
+    osx_image: xcode11.3
+    language: swift
+    script:
+    - xcodebuild -scheme Dense test -enableCodeCoverage YES -parallel-testing-enabled YES
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -X xcodellvm
   - stage: Linux test
     os: linux
     language: generic
@@ -25,16 +33,3 @@ jobs:
     script:
     - swift package update
     - swift test
-  - stage: OSX test
-    os: osx
-    osx_image: xcode11.3
-    language: swift
-    sudo: required
-    install:
-    - wget https://swift.org/builds/$SWIFT_BRANCH/xcode/$SWIFT_VERSION/$SWIFT_VERSION-osx.pkg
-    - sudo installer -pkg $SWIFT_VERSION-osx.pkg -target /
-    - export PATH="/Library/Developer/Toolchains/$SWIFT_VERSION.xctoolchain/usr/bin:$PATH"
-    script:
-    - xcodebuild -scheme Dense test -enableCodeCoverage YES -parallel-testing-enabled YES
-    after_success:
-    - bash <(curl -s https://codecov.io/bash) -X xcodellvm
